@@ -344,7 +344,7 @@ myCar = Car()
 상기 예제에서 "myCar"는 객체 변수 이름이고 "="은 변수에 무언가 동일한 것을 설정하는데,
 그 무언가는 새로운 Car 객체 인스턴스다.
 여기서 정말 수행하는 것은 자동차 객체 (Car object)를 초기화하는 것이다.
-정수 같은 원시변수(primitive variable)를 초기화할 때, 단지 변수를 숫자와 같게 설정한다.
+정수 같은 기초요소 변수(primitive variable)를 초기화할 때, 단지 변수를 숫자와 같게 설정한다.
 하지만 객체는 다수 데이터 조각으로 구성되어 있다.
 자동차 클래스(Car class)를 상기하면, 해당 코드 줄이 `__init__` 메쏘드를 호출하는 것을 본다.
 `__init__` 메쏘드는 특수 메쏘드로 모든 객체 변수를 초기화하고, 
@@ -436,8 +436,8 @@ def __init__(self, c, xpos, ypos, xspeed):
 이제 유일한 특성을 갖는 다수 객체 인스턴스를 동일한 스케치 위에 올려놓고 살펴보자.
 
 ~~~ {.python}
-# Even though there are multiple objects, we still only need one class. 
-# No matter how many cookies we make, only one cookie cutter is needed.
+# 객체가 다수 있지만, 여전히 클래스는 하나만 필요하다.
+# 아무리 많은 붕어빵을 만들더라도, 단지 붕어빵 틀은 하나만 필요하다.
 class Car(object):
     # The Constructor is defined with arguments.
     def __init__(self, c, xpos, ypos, xspeed):
@@ -471,4 +471,46 @@ def draw():
     myCar2.display()
 ~~~
 
+## 객체도 또한 자료형이다!
 
+이것이 첫 객체지향 프로그래밍 경험이라고 가정하면, 쉬엄쉬엄 침착하는 것이 중요하다.
+여기 예제에서 단지 클래스 한개, 그 클래스에서 2개 혹은 3개 객체를 생성했다.
+그럼에도 불구하고, 사실 객체를 뽑아내는데는 제한이 없다.
+프로세싱 스케치에 작문하는 것처럼 가능한 많은 클래스를 담을 수 있다.
+
+만약 추억의 겔로그(Space Invaders) 게임을 프로그래밍한다면, 
+예를 들어, 게임에 각 개체(entity, 엔티티)로 객체를 사용해서 
+우주선 클래스(Sapceship class), 적군 클래스(Enemy class), 총알 클래스(Buleet class) 생성할 수도 있다.
+
+추가로, 기초요소 자료형(primitive)은 아니지만, 클래스는 정수나 실수 같은 자료형(data type)이다.
+클래스는 데이터로 구성되기 때문에, 객체는 다른 객체를 포함할 수 있다.
+예를 들어, 방금 포크(Fork)와 숟가락(Spoon) 클래스 프로그래밍을 끝마쳤다고 가정하자.
+상차림(PlaceSetting) 클래스로 옮겨와서, 클래스 내부에 포크 객체와 숟가락 객체를 변수로 포함한다.
+완벽하게 합리적이고, 객체지향 프로그래밍에서 매우 흔하다.
+
+~~~ {.python}
+class PlaceSetting(object):
+    def __init__(self):
+        fork = Fork()
+        spoon = Spoon()
+~~~
+
+다른 어떤 자료형과 마찬가지로 객체를 함수에 인자로 넘길 수도 있다.
+겔로그 게임 예제에서, 만약 우주선이 총알을 적군에게 쏘면,
+아마도 적군이 총알에 맞았는지 판단하기 위해서 적군 클래스 내부에 함수를 작성할 것이다.
+
+~~~ {.python}
+def hit(self, bullet):
+    bulletX = bullet.getX()
+    bulletY = bullet.getY()
+    # Code to determine if   
+    # the bullet struck the enemy 
+~~~
+
+기초요소 값(정수, 실수 등)이 함수에 전달될 때, 
+복사가 된다. 객체에 대해서는 경우가 다르다. 
+결과가 좀더 직관적이다.
+함수에 객체가 전달된 뒤에 변경사항이 발생하면,
+스케치에 어딘가 사용된 객체에도 변경사항이 영향을 미친다.
+이것은 **참조에 의한 전달(pass-by-reference)**로 알려져 있는데,
+이유는 복사 대신에 실제 객체 참조가 함수에 전달되기 때문이다.
